@@ -50,6 +50,10 @@ graph LR
 A[[购买]]-->B[[处理]]-->C[[炒制]]-->D[西红柿炒鸡蛋]
 ```
 
+* First-class and higher-order functions
+* Pure functions
+* Referential transparency
+
 ---
 
 # λ Calculus
@@ -69,3 +73,62 @@ The most basic function is the identity function: `λx.x` which is equivalent to
   <Footnote :number=1><a href="https://learnxinyminutes.com/docs/lambda-calculus/" rel="noreferrer" target="_blank">Lambda Calculus</a></Footnote>
 </Footnotes>
 
+---
+
+# Pure Functions
+
+Pure functions (or expressions) have **no side effects (memory or I/O)**. This means that pure functions have several useful properties, many of which can be used to optimize the code:
+
+* If the result of a pure expression is not used, it can be removed without affecting other expressions.
+* If a pure function is called with arguments that cause no side-effects, the result is constant with respect to that argument list (sometimes called referential transparency or idempotence), i.e., **calling the pure function again with the same arguments returns the same result**. (This can enable caching optimizations such as memoization.)
+* If there is no data dependency between two pure expressions, their order can be reversed, or they can be performed in parallel and they cannot interfere with one another (in other terms, the evaluation of any pure expression is thread-safe).
+* If the entire language does not allow side-effects, then any evaluation strategy can be used; this gives the compiler freedom to reorder or combine the evaluation of expressions in a program (for example, using deforestation).
+
+---
+
+## Side Effect of Function
+
+In computer science, an operation, function or expression is said to have a side effect if it **modifies some state variable value(s) outside its local environment**, which is to say if it has any observable effect other than its primary effect of returning a value to the invoker of the operation. <u>Example side effects include modifying a non-local variable, modifying a static local variable, modifying a mutable argument passed by reference, performing I/O or calling other functions with side-effects.</u> In the presence of side effects, a program's behaviour may depend on history; that is, the order of evaluation matters. Understanding and debugging a function with side effects requires knowledge about the context and its possible histories.
+
+---
+
+```python
+x = 0
+def setx(n):
+    global x
+    x = n
+setx(3)
+assert x == 3
+setx(3)
+assert x == 3
+```
+
+```python
+def abs(n):
+    return -n if n < 0 else n
+assert abs(abs(-3)) == abs(-3)
+```
+
+```python
+def hello(name: str):
+  print('hello ', name)
+  return 'hello ' + name
+```
+
+```python
+def hello(name: str):
+  return 'hello ' + name
+```
+
+---
+
+## the function return values are identical for identical arguments
+
+A function is a special relationship between values: Each of its input values gives back exactly one output value.
+
+|![](https://www.mathsisfun.com/sets/images/function-sets.svg)|![](https://www.mathsisfun.com/sets/images/relation-not-function.svg)|
+|---|---|
+
+<Footnotes separator>
+  <Footnote><a href="https://www.mathsisfun.com/sets/function.html" rel="noreferrer" target="_blank">Function</a></Footnote>
+</Footnotes>
