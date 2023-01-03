@@ -267,3 +267,56 @@ hideInToc: true
 * Testable
 * Reasonable
 * Parallel
+
+---
+
+# First-Class Functions
+
+> a programming language is said to have first-class functions if it treats functions as first-class citizens.
+
+A programming language is said to have First-class functions when **functions in that language are treated like any other variable**. For example, in such a language, <u>a function can be passed as an argument to other functions, can be returned by another function and can be assigned as a value to a variable</u>.
+
+<img src="/first%2Csecond%2Cand_third-class_values.png" style="width: 80%"/>
+
+<Footnotes separator>
+  <Footnote><a href="https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function" rel="noreferrer" target="_blank">First-class Function</a></Footnote>
+  <Footnote><a href="https://www.cs.uky.edu/~raphael/courses/CS655/Advanced_programming_language_design.pdf" rel="noreferrer" target="_blank">Advanced programming language design. Raphael Finkel. P65</a></Footnote>
+</Footnotes>
+
+---
+
+```javascript
+const foo = () => {
+  console.log("foobar");
+};
+foo(); // Invoke it using the variable
+// foobar
+```
+
+```javascript
+function sayHello() {
+  return "Hello, ";
+}
+function greeting(helloMessage, name) {
+  console.log(helloMessage() + name);
+}
+// Pass `sayHello` as an argument to `greeting` function
+greeting(sayHello, "JavaScript!");
+// Hello, JavaScript!
+```
+
+```javascript
+function sayHello() {
+  return () => {
+    console.log("Hello!");
+  };
+}
+```
+
+
+<Footnotes separator>
+  <Footnote><a href="https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function" rel="noreferrer" target="_blank">First-class Function</a></Footnote>
+</Footnotes>
+
+---
+
