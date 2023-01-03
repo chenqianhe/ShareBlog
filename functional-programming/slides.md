@@ -449,3 +449,49 @@ function arrCompute(arr, compute) {
   return newArr
 }
 ```
+
+---
+
+# Pipe / Composable
+
+In functional programming, one mode is to realize a combined function by combining the functions of multiple functions.
+
+```javascript
+// Public functions
+let greeting = (firstname,lastname) => "h1,"+firstname+lastname;
+let toUpper = str => str.toUpperCase();
+let trimSpace = str => str.replace(/\s+/g,'');
+```
+
+The pipe function wrapper function is used to wrap the pipe `([greeting, toUpper, trimSpace])` according to the parameter order, while the compose function is used to wrap the compose `([trimSpace, toUpper, greeting])` according to the parameter order.
+
+---
+
+```javascript
+let pipe = function (funcs) {
+    let len = funcs.length;
+    let index = 0;
+    let result;
+    return function f1(...args) {
+        // 第一次args是传进来的参数，之后args==result
+        result = funcs[index].apply(this, args);
+        if (index >= len - 1) {
+            // 重置下标为0
+            index = 0;
+            return result;
+        }
+        index++;
+        return f1.call(null, result);
+    }
+};
+
+let compose = function (args) {
+    return pipe(args.reverse());
+};
+let fn1 = compose([trimSpace, toUpper, greeting]);
+console.log(fn1('h u a', 'd  a o'));
+```
+
+<Footnotes separator>
+  <Footnote><a href="https://juejin.cn/post/6844904006653837319" rel="noreferrer" target="_blank">JS之函数式编程compose和pipe</a></Footnote>
+</Footnotes>
