@@ -320,3 +320,43 @@ function sayHello() {
 
 ---
 
+# Referential Transparency
+
+In computer science, referential transparency and referential opacity are properties of parts of computer programs. An expression is called referentially transparent if it can be replaced with its corresponding value (and vice-versa) without changing the program's behavior. This requires that the expression be pure – **its value must be the same for the same inputs and its evaluation must have no side effects**. An expression that is not referentially transparent is called referentially opaque.
+
+```c
+int g = 0;
+
+int rt(int x) {
+  return x + 1;
+}
+
+int ro(int x) {
+  g++;
+  return x + g;
+}
+```
+
+---
+
+```c
+int i = ro(x) + ro(y) * (ro(x) - ro(x));
+```
+
+```c
+int i = ro(x) + ro(y) * 0;
+int i = ro(x) + 0;
+int i = ro(x);
+```
+<br />
+
+```c
+int tmp = g; int i = x + tmp + 1 + (y + tmp + 2) * (x + tmp + 3 - (x + tmp + 4)); g = g + 4;
+int tmp = g; int i = x + tmp + 1 + (y + tmp + 2) * (x + tmp + 3 - x - tmp - 4)); g = g + 4;
+int tmp = g; int i = x + tmp + 1 + (y + tmp + 2) * (-1); g = g + 4;
+int tmp = g; int i = x + tmp + 1 - y - tmp - 2; g = g + 4;
+int i = x - y - 1; g = g + 4;
+```
+
+Therefore, referential transparency allows us to reason about our code which will lead to more robust programs, the possibility of finding bugs that we couldn't hope to find by testing, and the possibility of seeing opportunities for optimization.
+
