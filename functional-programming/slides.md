@@ -276,7 +276,7 @@ hideInToc: true
 
 A programming language is said to have First-class functions when **functions in that language are treated like any other variable**. For example, in such a language, <u>a function can be passed as an argument to other functions, can be returned by another function and can be assigned as a value to a variable</u>.
 
-<img src="/first%2Csecond%2Cand_third-class_values.png" style="width: 80%"/>
+<img src="/first_second_and_third_class_values.png" style="width: 80%"/>
 
 <Footnotes separator>
   <Footnote><a href="https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function" rel="noreferrer" target="_blank">First-class Function</a></Footnote>
