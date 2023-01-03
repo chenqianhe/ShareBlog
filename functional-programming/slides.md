@@ -360,3 +360,92 @@ int i = x - y - 1; g = g + 4;
 
 Therefore, referential transparency allows us to reason about our code which will lead to more robust programs, the possibility of finding bugs that we couldn't hope to find by testing, and the possibility of seeing opportunities for optimization.
 
+---
+
+# Higher-Order Functions
+
+In mathematics and computer science, a higher-order function (HOF) is a function that does at least one of the following:
+
+* takes one or more functions as arguments (i.e. a procedural parameter, which is a parameter of a procedure that is itself a procedure),
+* returns a function as its result.
+
+## Why?
+
+**Don't Repeat Yourself**
+
+---
+
+Suppose there is a scenario where we need to add log output to each business function.
+* One way is to modify each function and add log output inside it.
+* Another way is to unify a method to achieve the effect of hooks, so that every business function call will be followed by the call log output
+
+
+---
+layout: two-cols
+---
+
+```javascript
+function arrAdd(arr) {
+  const newArr = []  
+  for(let i=0; i<arr.length; i++) {
+    newArr.push(arr[i]+1)
+  }
+  return newArr
+}  
+
+function arrSub(arr) {
+  const newArr = []  
+  for(let i=0; i<arr.length; i++) {
+    newArr.push(arr[i]-1)
+  }
+  return newArr
+}
+```
+
+::right::
+
+```javascript
+function arrMult(arr) {
+  const newArr = []  
+  for(let i=0; i<arr.length; i++) {
+    newArr.push(arr[i]*1)
+  }
+  return newArr
+} 
+
+function arrDivide(arr) {
+  const newArr = []  
+  for(let i=0; i<arr.length; i++) {
+    newArr.push(arr[i]/1)
+  }
+  return newArr
+} 
+```
+
+---
+
+```javascript
+function add(num) {
+  return num + 1  
+}
+
+function sub(num) {
+  return num - 1  
+}
+
+function mult(num) {
+  return num * 1 
+}  
+
+function divide(num) {
+  return num / 1
+}
+
+function arrCompute(arr, compute) {
+  const newArr = []  
+  for(let i=0; i<arr.length; i++) {
+    newArr.push(compute(arr[i]))
+  }
+  return newArr
+}
+```
