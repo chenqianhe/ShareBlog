@@ -578,3 +578,26 @@ function curry(func, arity=func.length) {
 }
 ```
 
+---
+
+# Category theory
+
+A category is formed by two sorts of objects: the objects of the category, and the morphisms, which relate two objects called the source and the target of the morphism. One often says that a morphism is an arrow that maps its source to its target. Morphisms can be composed if the target of the first morphism equals the source of the second one, and morphism composition has similar properties as function composition (associativity and existence of identity morphisms). Morphisms are often some sort of function, but this is not always the case. For example, a **monoid** may be viewed as a category with a single object, whose morphisms are the elements of the monoid.
+
+The second fundamental concept of category is the concept of a **functor**, which plays the role of a morphism between two categories $\displaystyle C_{1}$ and $\displaystyle C_{2}:$ it maps objects of $\displaystyle C_{1}$ to objects of $\displaystyle C_{2}$ and morphisms of $\displaystyle C_{1}$ to morphisms of $\displaystyle C_{2}$ in such a way that sources are mapped to sources and targets are mapped to targets (or, in the case of a contravariant functor, sources are mapped to targets and vice-versa). A third fundamental concept is a natural transformation that may be viewed as a morphism of functors.
+
+---
+
+范畴论是抽象地处理数学结构以及结构之间联系的一门数学理论，以抽象的方法来处理数学概念，将这些概念形式化成一组组的“对象”及“态射”。**有些人开玩笑地称之为“一般化的抽象废话”。**
+
+范畴由两类对象组成：范畴的对象和态射，它们将两个对象相关联，称为态射的源和目标。人们常说态射是将源映射到目标的箭头。如果第一个态射的目标等于第二个态射的源，则可以组合态射，并且态射组合具有与函数组合相似的性质（结合性和恒等态射的存在性）。态射通常是某种函数，但情况并非总是如此。例如，**幺半群**可以被视为具有单个对象的范畴，其态射是幺半群的元素。
+
+范畴的第二个基本概念是**函子**的概念，它起着两个范畴之间态射的作用。$\displaystyle C_{1}$ 和 $\displaystyle C_{2}:$ 它映射的对象 $\displaystyle C_{1}$ 的对象 $\displaystyle C_{2}$ 和态射 $\displaystyle C_{1}$ 的态射 $\displaystyle C_{2}$ 源映射到源，目标映射到目标（或者，在逆变函子的情况下，源映射到目标，反之亦然）。第三个基本概念是自然变换，可以将其视为函子的态射。
+
+```cpp
+YourType& operator= (const YourType& obj) {
+    id = obj.MessageId;
+    return *this;
+};
+```
+
