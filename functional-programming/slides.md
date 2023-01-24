@@ -85,6 +85,8 @@ Pure functions (or expressions) have **no side effects (memory or I/O)**. This m
 * If the entire language does not allow side-effects, then any evaluation strategy can be used; this gives the compiler freedom to reorder or combine the evaluation of expressions in a program (for example, using deforestation).
 
 ---
+hideInToc: true
+---
 
 ## Side Effect of Function
 
@@ -121,6 +123,8 @@ def hello(name: str):
 ```
 
 ---
+hideInToc: true
+---
 
 ## the function return values are identical for identical arguments
 
@@ -135,6 +139,7 @@ A function is a special relationship between values: Each of its input values gi
 
 ---
 layout: two-cols
+hideInToc: true
 ---
 
 ## Why Pure Functions
@@ -449,3 +454,199 @@ function arrCompute(arr, compute) {
   return newArr
 }
 ```
+
+---
+
+# Pipe / Composable
+
+In functional programming, one mode is to realize a combined function by combining the functions of multiple functions.
+
+```javascript
+// Public functions
+let greeting = (firstname,lastname) => "h1,"+firstname+lastname;
+let toUpper = str => str.toUpperCase();
+let trimSpace = str => str.replace(/\s+/g,'');
+```
+
+The pipe function wrapper function is used to wrap the pipe `([greeting, toUpper, trimSpace])` according to the parameter order, while the compose function is used to wrap the compose `([trimSpace, toUpper, greeting])` according to the parameter order.
+
+---
+
+```javascript
+let pipe = function (funcs) {
+    let len = funcs.length;
+    let index = 0;
+    let result;
+    return function f1(...args) {
+        // 第一次args是传进来的参数，之后args==result
+        result = funcs[index].apply(this, args);
+        if (index >= len - 1) {
+            // 重置下标为0
+            index = 0;
+            return result;
+        }
+        index++;
+        return f1.call(null, result);
+    }
+};
+
+let compose = function (args) {
+    return pipe(args.reverse());
+};
+let fn1 = compose([trimSpace, toUpper, greeting]);
+console.log(fn1('h u a', 'd  a o'));
+```
+
+<Footnotes separator>
+  <Footnote><a href="https://juejin.cn/post/6844904006653837319" rel="noreferrer" target="_blank">JS之函数式编程compose和pipe</a></Footnote>
+</Footnotes>
+
+---
+layout: two-cols
+---
+
+# Partial application & Currying
+
+## Multivariate function
+
+A multivariate function, or function of several variables is a function that depends on several arguments.
+
+More formally, a function of n variables is a function whose domain is a set of n-tuples. For example, multiplication of integers is a function of two variables, or bivariate function, whose domain is the set of all pairs (2-tuples) of integers, and whose codomain is the set of integers. The same is true for every binary operation. More generally, every mathematical operation is defined as a multivariate function.
+
+::right::
+
+```javascript
+function double(x) {
+  return x*2
+}
+
+function add(x, y) {
+  return x+y
+}
+
+function multiple(x,y........n) {
+  return ....
+}
+```
+
+---
+hideInToc: true
+---
+## Partial application
+
+In computer science, partial application (or partial function application) refers to the process of fixing a number of arguments to a function, producing another function of smaller arity. Given a function $\displaystyle f\colon (X\times Y\times Z)\to N$, we might fix (or 'bind') the first argument, producing a function of type $\displaystyle {\text{partial}}(f)\colon (Y\times Z)\to N$. Evaluation of this function might be represented as ${\displaystyle f_{partial}(2,3)}$.
+
+Note that the result of partial function application in this case is a function that takes two arguments. Partial application is sometimes incorrectly called currying, which is a related, but distinct concept.
+
+```javascript
+function wrap(func, fixedValue) {
+  return (input) => func(input, fixedValue)
+}
+const multiply3 = wrap(multiply, 3)
+
+multiply3(2)
+```
+
+---
+hideInToc: true
+---
+
+## Currying
+
+In mathematics and computer science, currying is the technique of translating the evaluation of a function that takes multiple arguments into evaluating a sequence of functions, each with a single argument. For example, currying a function $\displaystyle f$ that takes three arguments creates a nested unary function $\displaystyle g$, so that the code
+
+$$\displaystyle {\text{let }}x=f(a,b,c)$$
+
+gives $\displaystyle x$ the same value as the code
+
+$$\displaystyle {\begin{aligned}{\text{let }}h=g(a)\\{\text{let }}i=h(b)\\{\text{let }}x=i(c),\end{aligned}}$$
+
+or called in sequence,
+
+$$\displaystyle {\text{let }}x=g(a)(b)(c).$$
+
+---
+
+```javascript
+function curry(func, arity=func.length) {
+  function generateCurried(prevArgs) {
+    return function curried(nextArg) {
+      const args = [...prevArgs, nextArg]  
+      if(args.length >= arity) {
+        return func(...args)
+      } else {
+        return generateCurried(args)
+      }
+    }
+  }
+  return generateCurried([])
+}
+```
+
+---
+
+# Category theory
+
+A category is formed by two sorts of objects: the objects of the category, and the morphisms, which relate two objects called the source and the target of the morphism. One often says that a morphism is an arrow that maps its source to its target. Morphisms can be composed if the target of the first morphism equals the source of the second one, and morphism composition has similar properties as function composition (associativity and existence of identity morphisms). Morphisms are often some sort of function, but this is not always the case. For example, a **monoid** may be viewed as a category with a single object, whose morphisms are the elements of the monoid.
+
+The second fundamental concept of category is the concept of a **functor**, which plays the role of a morphism between two categories $\displaystyle C_{1}$ and $\displaystyle C_{2}:$ it maps objects of $\displaystyle C_{1}$ to objects of $\displaystyle C_{2}$ and morphisms of $\displaystyle C_{1}$ to morphisms of $\displaystyle C_{2}$ in such a way that sources are mapped to sources and targets are mapped to targets (or, in the case of a contravariant functor, sources are mapped to targets and vice-versa). A third fundamental concept is a natural transformation that may be viewed as a morphism of functors.
+
+---
+
+范畴论是抽象地处理数学结构以及结构之间联系的一门数学理论，以抽象的方法来处理数学概念，将这些概念形式化成一组组的“对象”及“态射”。**有些人开玩笑地称之为“一般化的抽象废话”。**
+
+范畴由两类对象组成：范畴的对象和态射，它们将两个对象相关联，称为态射的源和目标。人们常说态射是将源映射到目标的箭头。如果第一个态射的目标等于第二个态射的源，则可以组合态射，并且态射组合具有与函数组合相似的性质（结合性和恒等态射的存在性）。态射通常是某种函数，但情况并非总是如此。例如，**幺半群**可以被视为具有单个对象的范畴，其态射是幺半群的元素。
+
+范畴的第二个基本概念是**函子**的概念，它起着两个范畴之间态射的作用。$\displaystyle C_{1}$ 和 $\displaystyle C_{2}:$ 它映射的对象 $\displaystyle C_{1}$ 的对象 $\displaystyle C_{2}$ 和态射 $\displaystyle C_{1}$ 的态射 $\displaystyle C_{2}$ 源映射到源，目标映射到目标（或者，在逆变函子的情况下，源映射到目标，反之亦然）。第三个基本概念是自然变换，可以将其视为函子的态射。
+
+```cpp
+YourType& operator= (const YourType& obj) {
+    id = obj.MessageId;
+    return *this;
+};
+```
+
+---
+
+# Functor
+
+In mathematics, specifically category theory, a functor is a mapping between categories.
+
+## Identity Functor
+
+In category C, written 1C or idC, maps an object to itself and a morphism to itself. The identity functor is an endofunctor.
+
+## Maybe Functor
+
+Maybe enables you to model a value that may or may not be present.
+
+A Maybe value, on the other hand, makes it explicit that a value may or may not be present. In statically typed languages, it also forces you to deal with the case where no data is present; if you don't, your code will not compile.
+
+---
+
+# Monad
+
+In functional programming, a monad is a software design pattern with a structure that combines program fragments (functions) and wraps their return values in a type with additional computation. In addition to defining a wrapping monadic type, monads define two operators: one to wrap a value in the monad type, and another to compose together functions that output values of the monad type (these are known as monadic functions). General-purpose languages use monads to reduce boilerplate code needed for common operations (such as dealing with undefined values or fallible functions, or encapsulating bookkeeping code). Functional languages use monads to turn complicated sequences of functions into succinct pipelines that abstract away control flow, and side-effects.
+
+---
+
+# Semigroup & Monoid
+
+## Semigroup
+
+In mathematics, a semigroup is an algebraic structure consisting of a set together with an associative internal **binary operation** on it.
+
+The binary operation of a semigroup is most often denoted multiplicatively (just notation, not necessarily the elementary arithmetic multiplication): x·y, or simply xy, denotes the result of applying the semigroup operation to the ordered pair (x, y). Associativity is formally expressed as that **(x·y)·z = x·(y·z)** for all x, y and z in the semigroup.
+
+Semigroups may be considered a special case of magmas, where the **operation is associative**, or as a generalization of groups, without requiring the existence of an identity element or inverses. As in the case of groups or magmas, **the semigroup operation need not be commutative**, so x·y is not necessarily equal to y·x; a well-known example of an operation that is associative but non-commutative is matrix multiplication. If the semigroup operation is commutative, then the semigroup is called a commutative semigroup or (less often than in the analogous case of groups) it may be called an abelian semigroup.
+
+---
+hideInToc: true
+---
+
+## Monoid
+
+A monoid is an algebraic structure intermediate between semigroups and groups, and is a semigroup having an **identity element**.
+
+Monoid = Semigroup + identity element
+
