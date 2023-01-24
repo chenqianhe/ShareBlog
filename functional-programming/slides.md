@@ -495,3 +495,86 @@ console.log(fn1('h u a', 'd  a o'));
 <Footnotes separator>
   <Footnote><a href="https://juejin.cn/post/6844904006653837319" rel="noreferrer" target="_blank">JS之函数式编程compose和pipe</a></Footnote>
 </Footnotes>
+
+---
+layout: two-cols
+---
+
+# Partial application & Currying
+
+## Multivariate function
+
+A multivariate function, or function of several variables is a function that depends on several arguments.
+
+More formally, a function of n variables is a function whose domain is a set of n-tuples. For example, multiplication of integers is a function of two variables, or bivariate function, whose domain is the set of all pairs (2-tuples) of integers, and whose codomain is the set of integers. The same is true for every binary operation. More generally, every mathematical operation is defined as a multivariate function.
+
+::right::
+
+```javascript
+function double(x) {
+  return x*2
+}
+
+function add(x, y) {
+  return x+y
+}
+
+function multiple(x,y........n) {
+  return ....
+}
+```
+
+---
+hideInToc: true
+---
+## Partial application
+
+In computer science, partial application (or partial function application) refers to the process of fixing a number of arguments to a function, producing another function of smaller arity. Given a function $\displaystyle f\colon (X\times Y\times Z)\to N$, we might fix (or 'bind') the first argument, producing a function of type $\displaystyle {\text{partial}}(f)\colon (Y\times Z)\to N$. Evaluation of this function might be represented as ${\displaystyle f_{partial}(2,3)}$.
+
+Note that the result of partial function application in this case is a function that takes two arguments. Partial application is sometimes incorrectly called currying, which is a related, but distinct concept.
+
+```javascript
+function wrap(func, fixedValue) {
+  return (input) => func(input, fixedValue)
+}
+const multiply3 = wrap(multiply, 3)
+
+multiply3(2)
+```
+
+---
+hideInToc: true
+---
+
+## Currying
+
+In mathematics and computer science, currying is the technique of translating the evaluation of a function that takes multiple arguments into evaluating a sequence of functions, each with a single argument. For example, currying a function $\displaystyle f$ that takes three arguments creates a nested unary function $\displaystyle g$, so that the code
+
+$$\displaystyle {\text{let }}x=f(a,b,c)$$
+
+gives $\displaystyle x$ the same value as the code
+
+$$\displaystyle {\begin{aligned}{\text{let }}h=g(a)\\{\text{let }}i=h(b)\\{\text{let }}x=i(c),\end{aligned}}$$
+
+or called in sequence,
+
+$$\displaystyle {\text{let }}x=g(a)(b)(c).$$
+
+---
+
+```javascript
+function curry(func, arity=func.length) {
+  function generateCurried(prevArgs) {
+    return function curried(nextArg) {
+      const args = [...prevArgs, nextArg]  
+      if(args.length >= arity) {
+        return func(...args)
+      } else {
+        return generateCurried(args)
+      }
+    }
+  }
+  return generateCurried([])
+}
+```
+
