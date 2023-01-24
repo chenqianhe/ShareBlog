@@ -85,6 +85,8 @@ Pure functions (or expressions) have **no side effects (memory or I/O)**. This m
 * If the entire language does not allow side-effects, then any evaluation strategy can be used; this gives the compiler freedom to reorder or combine the evaluation of expressions in a program (for example, using deforestation).
 
 ---
+hideInToc: true
+---
 
 ## Side Effect of Function
 
@@ -121,6 +123,8 @@ def hello(name: str):
 ```
 
 ---
+hideInToc: true
+---
 
 ## the function return values are identical for identical arguments
 
@@ -135,6 +139,7 @@ A function is a special relationship between values: Each of its input values gi
 
 ---
 layout: two-cols
+hideInToc: true
 ---
 
 ## Why Pure Functions
@@ -600,4 +605,22 @@ YourType& operator= (const YourType& obj) {
     return *this;
 };
 ```
+
+---
+
+# Functor
+
+In mathematics, specifically category theory, a functor is a mapping between categories.
+
+## Identity Functor
+
+In category C, written 1C or idC, maps an object to itself and a morphism to itself. The identity functor is an endofunctor.
+
+## Maybe Functor
+
+Maybe enables you to model a value that may or may not be present.
+
+A Maybe value, on the other hand, makes it explicit that a value may or may not be present. In statically typed languages, it also forces you to deal with the case where no data is present; if you don't, your code will not compile.
+
+---
 
