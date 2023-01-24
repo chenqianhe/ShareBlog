@@ -628,4 +628,25 @@ A Maybe value, on the other hand, makes it explicit that a value may or may not 
 
 In functional programming, a monad is a software design pattern with a structure that combines program fragments (functions) and wraps their return values in a type with additional computation. In addition to defining a wrapping monadic type, monads define two operators: one to wrap a value in the monad type, and another to compose together functions that output values of the monad type (these are known as monadic functions). General-purpose languages use monads to reduce boilerplate code needed for common operations (such as dealing with undefined values or fallible functions, or encapsulating bookkeeping code). Functional languages use monads to turn complicated sequences of functions into succinct pipelines that abstract away control flow, and side-effects.
 
+---
+
+# Semigroup & Monoid
+
+## Semigroup
+
+In mathematics, a semigroup is an algebraic structure consisting of a set together with an associative internal **binary operation** on it.
+
+The binary operation of a semigroup is most often denoted multiplicatively (just notation, not necessarily the elementary arithmetic multiplication): x·y, or simply xy, denotes the result of applying the semigroup operation to the ordered pair (x, y). Associativity is formally expressed as that **(x·y)·z = x·(y·z)** for all x, y and z in the semigroup.
+
+Semigroups may be considered a special case of magmas, where the **operation is associative**, or as a generalization of groups, without requiring the existence of an identity element or inverses. As in the case of groups or magmas, **the semigroup operation need not be commutative**, so x·y is not necessarily equal to y·x; a well-known example of an operation that is associative but non-commutative is matrix multiplication. If the semigroup operation is commutative, then the semigroup is called a commutative semigroup or (less often than in the analogous case of groups) it may be called an abelian semigroup.
+
+---
+hideInToc: true
+---
+
+## Monoid
+
+A monoid is an algebraic structure intermediate between semigroups and groups, and is a semigroup having an **identity element**.
+
+Monoid = Semigroup + identity element
 
