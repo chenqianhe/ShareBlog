@@ -78,6 +78,8 @@ agent’s cognitive level.
 - On the other hand, there is a severe lack of suitable training data in scientific domains, making it difficult for agents to comprehend the entire domain knowledge
 
 ---
+hideInToc: true
+---
 
 ### Lifecycle-oriented Deployment
 
@@ -168,10 +170,8 @@ human guides** when appropriate to compensate for agents’ shortcomings is a go
 the further advancements of agents.
 
 ---
-hideInToc: true
----
 
-### Interactive Engagement between Human and Agent
+## Interactive Engagement between Human and Agent
 
 Human-agent interaction, as the name suggests, involves agents collaborating with humans to accomplish tasks. 
 With the enhancement of agent capabilities, human involvement becomes progressively
@@ -187,7 +187,7 @@ figureUrl: /Two_paradigms_of_human-agent_interaction.png
 hideInToc: true
 ---
 
-#### Instructor-Executor Paradigm
+### Instructor-Executor Paradigm
 
 The simplest approach involves human guidance throughout the process: humans provide clear and
 specific instructions directly, while the agents’ role is to understand natural language commands from
@@ -209,7 +209,7 @@ humans and translate them into corresponding actions.
 hideInToc: true
 ---
 
-#### Equal Partnership Paradigm
+### Equal Partnership Paradigm
 
 **Empathetic communicator.** With the rapid development of AI, conversational agents have garnered
 extensive attention in research fields in various forms, such as personalized custom roles and virtual chatbots.
